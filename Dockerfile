@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Define the command to run the application
-CMD ["npm", "run", "preview"]
+CMD ["npx", "astro", "preview", "--host", "0.0.0.0"]
