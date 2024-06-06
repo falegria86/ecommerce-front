@@ -22,3 +22,25 @@ export interface Products {
     category: string;
     __v: number;
 }
+
+export interface CartResponse {
+    _id: string;
+    products: CartProduct[];
+    __v: number;
+}
+
+export interface CartProduct {
+    quantity: number;
+    product: string;
+}
+
+export interface CartByID {
+    _id: string;
+    products: ProductElement[];
+    __v: number;
+}
+
+export interface ProductElement {
+    quantity: number;
+    product: Products;
+}

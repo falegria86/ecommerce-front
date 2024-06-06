@@ -1,0 +1,1 @@
+export const url = "https://product-manager-production-8d9a.up.railway.app";

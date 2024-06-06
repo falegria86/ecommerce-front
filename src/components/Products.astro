@@ -1,23 +1,35 @@
 ---
-import type { ProductsResponse, Products } from "../../interfaces/productTypes";
-import { Button } from "./ui/button";
+import type {
+    ProductsResponse,
+    Products,
+    CartResponse,
+} from "../../interfaces/productTypes";
+import ProductCard from "./ProductCard";
 
-const url = "https://product-manager-production-8d9a.up.railway.app";
+// const url = import.meta.env.API_URL;
+import { url } from "../../config/url";
 
-const res = await fetch(`${url}/products`);
-const data: ProductsResponse = await res.json();
-const products: Products[] = data.payload;
+const productRes = await fetch(`${url}/products`);
+const productsData: ProductsResponse = await productRes.json();
+const products: Products[] = productsData.payload;
+
+const cartRes = await fetch(`${url}/carts`);
+const cartsData: CartResponse[] = await cartRes.json();
+const idCart: string = cartsData[0]._id;
 ---
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-4 gap-5">
     {
         products.map((product) => (
-            <>
-                <h2>{product.title}</h2>
-                <p>{product.description}</p>
-            </>
+            <ProductCard
+                thumbnail={product.thumbnail}
+                title={product.title}
+                price={product.price}
+                description={product.description}
+                idProduct={product._id}
+                idCart={idCart}
+                client:load
+            />
         ))
     }
 </div>
-
-<Button>Hola</Button>

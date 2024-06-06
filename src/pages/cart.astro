@@ -1,0 +1,14 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { url } from "../../config/url";
+import type { CartResponse, CartByID } from "interfaces/productTypes";
+import CartComponent from "../components/Cart";
+
+const cartsRes = await fetch(`${url}/carts`);
+const cartsData: CartResponse[] = await cartsRes.json();
+const idCart = cartsData[0]._id;
+---
+
+<Layout title="Carrito">
+    <CartComponent idCart={idCart} client:load/>
+</Layout>
