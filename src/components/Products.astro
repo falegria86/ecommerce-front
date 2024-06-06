@@ -1,6 +1,6 @@
 ---
 import type { ProductsResponse, Products } from "../../interfaces/productTypes";
-const url = import.meta.env.API_URL;
+const url = "https://product-manager-production-8d9a.up.railway.app";
 
 const res = await fetch(`${url}/products`);
 const data: ProductsResponse = await res.json();
