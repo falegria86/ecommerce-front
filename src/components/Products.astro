@@ -1,5 +1,7 @@
 ---
 import type { ProductsResponse, Products } from "../../interfaces/productTypes";
+import { Button } from "./ui/button";
+
 const url = "https://product-manager-production-8d9a.up.railway.app";
 
 const res = await fetch(`${url}/products`);
@@ -17,3 +19,5 @@ const products: Products[] = data.payload;
         ))
     }
 </div>
+
+<Button>Hola</Button>
