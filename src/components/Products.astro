@@ -1,0 +1,19 @@
+---
+import type { ProductsResponse, Products } from "../../interfaces/productTypes";
+const url = import.meta.env.API_URL;
+
+const res = await fetch(`${url}/products`);
+const data: ProductsResponse = await res.json();
+const products: Products[] = data.payload;
+---
+
+<div class="grid grid-cols-3">
+    {
+        products.map((product) => (
+            <>
+                <h2>{product.title}</h2>
+                <p>{product.description}</p>
+            </>
+        ))
+    }
+</div>
