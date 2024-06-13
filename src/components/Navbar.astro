@@ -7,9 +7,9 @@ const url = Astro.url.pathname;
     <ul class="text-white flex justify-between">
         <div class="flex gap-16 text-sm font-semibold">
             <li
-                class=`${url === '/' ? 'bg-blue-400' : 'bg-blue-600'} py-2 px-4 rounded-xl`
+                class=`${url === '/products' ? 'bg-blue-400' : 'bg-blue-600'} py-2 px-4 rounded-xl`
             >
-                <a href="/">Productos</a>
+                <a href="/products">Productos</a>
             </li>
             <li
                 class=`${url === '/add' ? 'bg-blue-400' : 'bg-blue-600'} py-2 px-4 rounded-xl`

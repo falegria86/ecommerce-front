@@ -1,0 +1,119 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { url } from "config/url";
+
+const errors = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    age: "",
+    password: "",
+};
+
+if (Astro.request.method === "POST") {
+    try {
+        const data = await Astro.request.formData();
+        const firstName = data.get("firstName");
+        const lastName = data.get("lastName");
+        const email = data.get("email");
+        const age = data.get("age");
+        const password = data.get("password");
+
+        if (typeof password !== "string" || password.length < 6)
+            errors.password += "Password must be at least 6 characters. ";
+
+        if (!firstName) errors.firstName += "Name is required";
+        if (!lastName) errors.lastName += "Last name is required";
+
+        const res = await fetch(`${url}/users/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                age,
+                password,
+            }),
+            credentials: "include",
+        });
+
+        if (res.ok) {
+            return Astro.redirect("/login");
+        } else {
+            const errorData = await res.json();
+            errors.password = errorData.message;
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
+---
+
+<Layout title="Login">
+    <h2 class="mb-5">Iniciar sesión</h2>
+    <p>
+        Already have an account? <a href="/login" class="text-blue-700"
+            >Login now</a
+        >
+    </p>
+    <form class="space-y-5" method="POST" id="login-form">
+        <div>
+            <h5 class="mb-1">Nombre</h5>
+            <input
+                type="text"
+                name="firstName"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {errors.firstName && <p>{errors.firstName}</p>}
+        </div>
+        <div>
+            <h5 class="mb-1">Apellido</h5>
+            <input
+                type="text"
+                name="lastName"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {errors.lastName && <p>{errors.lastName}</p>}
+        </div>
+        <div>
+            <h5 class="mb-1">Email</h5>
+            <input
+                type="email"
+                name="email"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {errors.email && <p>{errors.email}</p>}
+        </div>
+        <div>
+            <h5 class="mb-1">Edad</h5>
+            <input
+                type="text"
+                name="age"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {errors.age && <p>{errors.age}</p>}
+        </div>
+        <div>
+            <h5 class="mb-1">Contraseña</h5>
+            <input
+                type="password"
+                name="password"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {errors.password && <p>{errors.password}</p>}
+        </div>
+
+        <button
+            class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700"
+            type="submit"
+        >
+            Registrarse
+        </button>
+    </form>
+    <!-- <LoginForm /> -->
+</Layout>

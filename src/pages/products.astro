@@ -1,0 +1,44 @@
+---
+import type {
+    ProductsResponse,
+    Products,
+    CartResponse,
+} from "../../interfaces/productTypes";
+import ProductCard from "../components/ProductCard";
+import { url } from "../../config/url";
+import Layout from "../layouts/Layout.astro";
+
+try {
+    const authRes = await fetch(`${url}/users/info`);
+    const authData = await authRes.json();
+    console.log(authData);
+} catch (error) {
+    console.log(error);
+}
+
+const productRes = await fetch(`${url}/products`);
+const productsData: ProductsResponse = await productRes.json();
+const products: Products[] = productsData.payload;
+
+const cartRes = await fetch(`${url}/carts`);
+const cartsData: CartResponse[] = await cartRes.json();
+const idCart: string = cartsData[0]._id;
+---
+
+<Layout title="Products">
+    <div class="grid grid-cols-4 gap-5">
+        {
+            products.map((product) => (
+                <ProductCard
+                    thumbnail={product.thumbnail}
+                    title={product.title}
+                    price={product.price}
+                    description={product.description}
+                    idProduct={product._id}
+                    idCart={idCart}
+                    client:load
+                />
+            ))
+        }
+    </div>
+</Layout>

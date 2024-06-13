@@ -1,0 +1,87 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { url } from "config/url";
+
+const errors = { email: "", password: "" };
+
+if (Astro.request.method === "POST") {
+    try {
+        const data = await Astro.request.formData();
+        const email = data.get("email");
+        const password = data.get("password");
+
+        if (typeof email !== "string") errors.email += "Email is not valid. ";
+
+        if (typeof password !== "string" || password.length < 6)
+            errors.password += "Password must be at least 6 characters. ";
+
+        const res = await fetch(`${url}/users/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+            credentials: "include",
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data);
+            Astro.cookies.set("session", data.sessionId, {
+                path: "/",
+                httpOnly: true,
+            });
+            return Astro.redirect("/products");
+        } else {
+            errors.password = "Wrong user or password!";
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
+---
+
+<Layout title="Login">
+    <h2 class="mb-5">Iniciar sesión</h2>
+    <p>
+        Don't have an account? <a href="/register" class="text-blue-700"
+            >Register now</a
+        >
+    </p>
+    <form class="space-y-5" method="POST" id="login-form">
+        <div>
+            <h5 class="mb-1">Email</h5>
+            <input
+                type="email"
+                name="email"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {errors.email && <p class="text-red-500 text-sm">{errors.email}</p>}
+        </div>
+        <div>
+            <h5 class="mb-1">Password</h5>
+            <input
+                type="password"
+                name="password"
+                class="border border-gray-500 rounded-sm px-4 py-2"
+            />
+            {
+                errors.password && (
+                    <p class="text-red-500 text-sm">{errors.password}</p>
+                )
+            }
+        </div>
+
+        <button
+            class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700"
+            type="submit"
+        >
+            Login
+        </button>
+    </form>
+</Layout>
