@@ -1,5 +1,5 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import LayoutLogin from "@/layouts/LayoutLogin.astro";
 import { url } from "config/url";
 
 const errors = { email: "", password: "" };
@@ -46,20 +46,15 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<Layout title="Login">
-    <h2 class="mb-5">Iniciar sesión</h2>
-    <p>
-        Don't have an account? <a href="/register" class="text-blue-700"
-            >Register now</a
-        >
-    </p>
+<LayoutLogin title="Login">
+    <h4 class="font-bold mb-2">Ecommerce Francisco Gómez</h4>
     <form class="space-y-5" method="POST" id="login-form">
         <div>
             <h5 class="mb-1">Email</h5>
             <input
                 type="email"
                 name="email"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {errors.email && <p class="text-red-500 text-sm">{errors.email}</p>}
         </div>
@@ -68,7 +63,7 @@ if (Astro.request.method === "POST") {
             <input
                 type="password"
                 name="password"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {
                 errors.password && (
@@ -77,11 +72,17 @@ if (Astro.request.method === "POST") {
             }
         </div>
 
+        <p class="text-sm">
+            Don't have an account? <a href="/register" class="text-blue-700"
+                >Register now</a
+            >
+        </p>
+
         <button
-            class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700"
+            class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700 w-full"
             type="submit"
         >
             Login
         </button>
     </form>
-</Layout>
+</LayoutLogin>

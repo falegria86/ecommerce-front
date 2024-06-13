@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import LayoutLogin from "@/layouts/LayoutLogin.astro";
 import { url } from "config/url";
 
 const errors = {
@@ -54,29 +55,26 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<Layout title="Login">
-    <h2 class="mb-5">Iniciar sesión</h2>
-    <p>
-        Already have an account? <a href="/login" class="text-blue-700"
-            >Login now</a
-        >
-    </p>
+<LayoutLogin title="Login">
+    <h4 class="font-bold mb-2">Ecommerce Francisco Gómez</h4>
+    <h4 class="mb-1 text-center">Register</h4>
+
     <form class="space-y-5" method="POST" id="login-form">
         <div>
-            <h5 class="mb-1">Nombre</h5>
+            <h5 class="mb-1">Name</h5>
             <input
                 type="text"
                 name="firstName"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {errors.firstName && <p>{errors.firstName}</p>}
         </div>
         <div>
-            <h5 class="mb-1">Apellido</h5>
+            <h5 class="mb-1">Last Name</h5>
             <input
                 type="text"
                 name="lastName"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {errors.lastName && <p>{errors.lastName}</p>}
         </div>
@@ -85,35 +83,39 @@ if (Astro.request.method === "POST") {
             <input
                 type="email"
                 name="email"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {errors.email && <p>{errors.email}</p>}
         </div>
         <div>
-            <h5 class="mb-1">Edad</h5>
+            <h5 class="mb-1">Age</h5>
             <input
                 type="text"
                 name="age"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {errors.age && <p>{errors.age}</p>}
         </div>
         <div>
-            <h5 class="mb-1">Contraseña</h5>
+            <h5 class="mb-1">Password</h5>
             <input
                 type="password"
                 name="password"
-                class="border border-gray-500 rounded-sm px-4 py-2"
+                class="border border-gray-500 rounded-sm px-4 py-2 w-full"
             />
             {errors.password && <p>{errors.password}</p>}
         </div>
-
+        <p>
+            Already have an account? <a href="/login" class="text-blue-700"
+                >Login now</a
+            >
+        </p>
         <button
-            class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700"
+            class="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700 w-full"
             type="submit"
         >
             Registrarse
         </button>
     </form>
     <!-- <LoginForm /> -->
-</Layout>
+</LayoutLogin>
