@@ -58,9 +58,9 @@ const ProductCard = ({ thumbnail, title, price, description, idProduct, idCart, 
     }
 
     return (
-        <Card>
+        <Card className="max-w-96">
             <CardHeader>
-                <img src={thumbnail} alt={title} />
+                <img src={thumbnail} alt={title} className="w-3/4 mx-auto"/>
             </CardHeader>
             <CardContent>
                 <h5 className="text-base">${price}</h5>
